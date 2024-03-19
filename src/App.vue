@@ -1,10 +1,12 @@
 <template>
-  <HelloWord :sub-title="subTitle" />
+  <div>
+    <Header title="Pokemon" />
+  </div>
 
 </template>
 
 <script setup>
-import HelloWord from "@/components/HelloWord.vue";
+import Header from "@/components/Header.vue";
 const subTitle = "Lorem ipsum dolor."
 </script>
 
