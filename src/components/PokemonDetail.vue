@@ -1,35 +1,35 @@
 <template>
-    <div class="pokemon-detail">
-        <div class="pokemon-info">
-            <!-- <p>{{ index }} - {{ item.name }}</p> -->
-            <!-- <img :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png?language=fr`"
-                alt="Pokemon"> -->
-        </div>
+    <div v-if="pokemon">
+        <h2>{{ pokemon.name }}</h2>
+        <img :src="pokemon.sprites.front_default" :alt="pokemon.name" />
+        <p>Weight: {{ pokemon.weight }}</p>
+        <p>Height: {{ pokemon.height }}</p>
+        <p v-if="pokemon.types.length === 1">Type: {{ pokemon.types[0].type.name }}</p>
+        <p v-else>Types:
+            <span v-for="(type, index) in pokemon.types" :key="index">{{ type.type.name }}{{ index <
+        pokemon.types.length - 1 ? ', ' : '' }}</span>
+        </p>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    props: ['pokemon'],
-    name: "PokemonDetail"
+    data() {
+        return {
+            pokemon: null
+        };
+    },
+    mounted() {
+        const id = this.$route.params.id;
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+            .then(response => {
+                this.pokemon = response.data;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
 };
 </script>
-
-<style scoped>
-.pokemon-detail {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.pokemon-info {
-    text-align: center;
-}
-
-img {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 10px;
-}
-</style>

@@ -1,10 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import PokemonList from '../components/PokemonList.vue';
-import PokemonDetail from '../components/PokemonDetail.vue';
+import PokemonList from '@/components/PokemonList.vue';
+import PokemonDetail from '@/components/PokemonDetail.vue';
 
 const routes = [
-    { path: '/', name: "PokemonList", component: PokemonList },
-    { path: '/detail', component: PokemonDetail, props: true, name: "PokemonDetail" }
+    {
+        path: '/',
+        name: 'PokemonList',
+        component: PokemonList
+    },
+    {
+        path: '/pokemon/:id',
+        name: 'PokemonDetail',
+        component: PokemonDetail
+    }
 ];
 
 const router = createRouter({
@@ -13,3 +21,5 @@ const router = createRouter({
 });
 
 export default router;
+
+
