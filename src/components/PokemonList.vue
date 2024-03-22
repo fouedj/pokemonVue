@@ -1,6 +1,6 @@
 <template>
     <div class="pokemon-list">
-        <h2>Liste des Pokémons</h2>
+        <Header title="Pokemons" />
         <div class="pokemon-cards">
             <router-link v-for="pokemon in pokemons" :key="pokemon.id"
                 :to="{ name: 'PokemonDetail', params: { id: pokemon.id } }" class="pokemon-card">
@@ -8,12 +8,15 @@
                 <h3>{{ pokemon.name }}</h3>
             </router-link>
         </div>
+        <Footer container="Footer" title="Footer" />
     </div>
+
 </template>
 
 <script>
 import axios from 'axios';
-
+import Header from '@/components/Header.vue';
+import Footer from "@/components/Footer.vue"
 export default {
     data() {
         return {
@@ -21,14 +24,17 @@ export default {
             pokemonImg: []
         };
     },
+    components: {
+        Header,
+        Footer
+    },
     mounted() {
         axios.get('https://pokeapi.co/api/v2/pokemon?limit=20')
             .then(response => {
-                console.log({ response })
                 this.pokemons = response.data.results.map((pokemon, index) => ({
                     id: index + 1,
                     name: pokemon.name,
-                    image: pokemon.image
+                    image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`
                 }));
             })
             .catch(error => {
